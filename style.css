@@ -1,0 +1,13 @@
+GtkEntry.invalid {
+    background-color: #ffaaaa;
+    background: #ffaaaa;
+}
+
+GtkButton#ok-button {
+    background-color: green;
+    background: green;
+}
+
+GtkLabel.focused {
+    font-weight: bold;
+}
