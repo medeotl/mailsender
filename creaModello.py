@@ -5,11 +5,10 @@ from gi.repository import Gtk, Gdk, Pango
 class TextViewWindow(Gtk.Window):
 
     def __init__(self):
-        Gtk.Window.__init__(self, title="Crea Modello")
+        Gtk.Window.__init__(self, title="Crea Modello 1")
 
         self.set_default_size(555, 450)
         self.set_border_width(6)
-        self.set_keep_above(True)
         self.set_position(Gtk.WindowPosition.CENTER)
 
         self.box = Gtk.Box(orientation=1, spacing=6)
@@ -18,7 +17,7 @@ class TextViewWindow(Gtk.Window):
         self.create_from()
         self.create_textview()
         self.create_toolbar()
-        
+
     def create_from(self):
         """ Crea i campi A:, CC: e CCN: """
 
@@ -44,19 +43,27 @@ class TextViewWindow(Gtk.Window):
         self.box.pack_end(toolbar, False, True, 0)
 
         # bold, italic, underline
-        button_bold = Gtk.ToggleToolButton.new_from_stock(Gtk.STOCK_BOLD)
-        toolbar.insert(button_bold, 0)
-        button_italic = Gtk.ToolButton.new_from_stock(Gtk.STOCK_ITALIC)
-        toolbar.insert(button_italic, 1)
-        button_underline = Gtk.ToolButton.new_from_stock(Gtk.STOCK_UNDERLINE)
-        toolbar.insert(button_underline, 2)
+        self.button_bold = Gtk.ToggleToolButton.new()
+        self.button_bold.set_icon_name("format-text-bold")
+        toolbar.insert(self.button_bold, 0)
+        self.button_italic = Gtk.ToggleToolButton.new()
+        self.button_italic.set_icon_name("format-text-italic")
+        toolbar.insert(self.button_italic, 1)
+        self.button_underline = Gtk.ToggleToolButton.new()
+        self.button_underline.set_icon_name("format-text-underline")
+        toolbar.insert(self.button_underline, 2)
 
-        button_bold.connect("clicked", self.on_style_button_clicked,
-            self.tag_bold)
-        button_italic.connect("clicked", self.on_style_button_clicked,
-            self.tag_italic)
-        button_underline.connect("clicked", self.on_style_button_clicked,
-            self.tag_underline)
+        self.button_bold.connect("clicked",
+            self.on_style_button_clicked, self.tag_bold)
+        self.button_italic.connect("clicked",
+            self.on_style_button_clicked, self.tag_italic)
+        self.button_underline.connect("clicked",
+            self.on_style_button_clicked, self.tag_underline)
+
+        self.style_dict = {
+            "bold":self.button_bold,
+            "italic":self.button_italic,
+            "underline":self.button_underline}
         
         # Get Info
         button_get_tag = Gtk.ToolButton.new(None, "TAG - Get Info")
@@ -107,6 +114,8 @@ class TextViewWindow(Gtk.Window):
         self.textbuffer.set_text("In allegato alla presente domanda di "
             + "Mini ASpI di  . "
             + "Si prega cortesemente di inviarla subito")
+        self.textbuffer.connect("notify::cursor-position",
+            self.on_cursor_position_changed)    
         
         scrolledwindow.add(self.textview)
 
@@ -117,17 +126,20 @@ class TextViewWindow(Gtk.Window):
         self.tag_underline = self.textbuffer.create_tag("underline",
             underline=Pango.Underline.SINGLE)
 
-    def on_style_button_clicked(self, widget, tag):
+    def on_style_button_clicked(self, button, tag):
         """ gestione dei pulsanti BOLD, ITALIC, UNDERLINE """
+        print (button.get_active() )
         if self.textbuffer.props.has_selection:
+            # ho testo selezionato a cui applicare la formattazione
             bounds = self.textbuffer.get_selection_bounds()
             start, end = bounds
-            self.textbuffer.apply_tag(tag, start, end)
-            # disattivo il pulsante
-            # FIXME: la disattivazione non funziona così
-            widget.set_active(False)
+            if button.get_active():
+                self.textbuffer.apply_tag(tag, start, end)
+            else:
+                self.textbuffer.remove_tag(tag, start, end)
         else:
-            cursore = self.textbuffer.props.cursor_position
+            cursore = self.textbuffer.get_iter_at_offset(
+                self.textbuffer.props.cursor_position)
             self.textbuffer.apply_tag(tag, cursore, cursore)
 
     def on_button_tag_clicked(self, widget):
@@ -141,6 +153,15 @@ class TextViewWindow(Gtk.Window):
     def on_justify_toggled(self, widget, justification):
         """ imposta la giustificazione selezionata """
         self.textview.set_justification(justification)
+
+    def on_cursor_position_changed(self, buffer, data=None):
+        ti = self.textbuffer.get_iter_at_offset(
+            self.textbuffer.props.cursor_position-1)
+        self.button_bold.set_active(False)
+        self.button_italic.set_active(False)
+        self.button_underline.set_active(False)
+        for tag in ti.get_tags():
+            self.style_dict[tag.props.name].set_active(True)
             
 cssProvider = Gtk.CssProvider()
 cssProvider.load_from_path('style.css')
