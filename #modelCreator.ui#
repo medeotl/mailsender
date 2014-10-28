@@ -173,8 +173,9 @@
               <object class="GtkTextView" id="textview1">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="margin_top">9</property>
                 <property name="wrap_mode">word</property>
-                <property name="input_hints">GTK_INPUT_HINT_UPPERCASE_CHARS | GTK_INPUT_HINT_NONE</property>
+                <property name="input_purpose">email</property>
               </object>
             </child>
           </object>
