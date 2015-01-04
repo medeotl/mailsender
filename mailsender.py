@@ -64,7 +64,7 @@ class TextViewWindow(Gtk.Window):
 
         self.box.pack_end(self.bb, False, False, 0)
 
-######----------           GESTORI EVENTI               ----------######
+######----------             GESTORI EVENTI             ----------######
                
     def on_nome_changed(self, nome, posizione):
         # cancello quanto precedentemente scritto

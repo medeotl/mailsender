@@ -2,3 +2,4 @@ DEV MANUAL
 
 decido di non usare glade per creare l'interfaccia grafica
 Per questo motivo devo eliminare tutti i riferimenti a GLADE
+
