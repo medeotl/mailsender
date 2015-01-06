@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # da aggiustare: funzionamento BOLD, ITALIC, UNDERLINE
 
 from gi.repository import Gtk, Gdk, Pango

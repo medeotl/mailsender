@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # validatore di date
 
 def data_valida(data):
@@ -30,15 +32,16 @@ def data_valida(data):
 		data = datetime.date(int(aaaa), int(mm), int(gg) )
 	except ValueError as e:
 	    print(e)
-	    return False, e
+	    return False, "{0}".format(e)
 
 	# data valida!
-	return True, ''
+	return True, gg + '/' + mm + '/' + aaaa
 
-print( data_valida('11071975') )
-print( data_valida('11/07/1975') )
-print( data_valida('nico') )
-print( data_valida('12345678as') )
-print( data_valida('32132000') )
+# test
+#~ print( data_valida('11071975') )
+#~ print( data_valida('11/07/1975') )
+#~ print( data_valida('nico') )
+#~ print( data_valida('12345678as') )
+#~ print( data_v	alida('32132000') )
 
 	

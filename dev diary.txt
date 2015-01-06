@@ -3,3 +3,6 @@ DEV MANUAL
 decido di non usare glade per creare l'interfaccia grafica
 Per questo motivo devo eliminare tutti i riferimenti a GLADE
 
+LINK
+importare file da una sottodirectory
+http://stackoverflow.com/questions/1260792/python-import-a-file-from-a-subdirectory

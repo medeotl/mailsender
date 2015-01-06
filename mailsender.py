@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
+
 # Espressione regolare per validare date inserite
 # ^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$
 
 from gi.repository import Gtk, Gdk, Pango
+import TOOLS.dateValidator as dateValidator
 
 class TextViewWindow(Gtk.Window):
 
@@ -19,6 +22,7 @@ class TextViewWindow(Gtk.Window):
         self.create_textview()
         self.create_entry()
         
+
     def create_textview(self):
         scrolledwindow = Gtk.ScrolledWindow()
         scrolledwindow.set_hexpand(True)
@@ -44,7 +48,8 @@ class TextViewWindow(Gtk.Window):
         self.entryNome.set_placeholder_text("Assistito")
         self.entryNome.set_hexpand(True)
         
-        self.lblPrimoLavoro = Gtk.Label("Primo rapporto di lavoro", xalign=1)
+        self.lblPrimoLavoro = Gtk.Label("Primo rapporto di lavoro",
+                                        xalign=1)
         self.entryPrimoLavoro = Gtk.Entry()
         
         grid.attach(self.lblNome, 0, 0, 1, 1)
@@ -52,10 +57,13 @@ class TextViewWindow(Gtk.Window):
         grid.attach(self.lblPrimoLavoro, 0, 1, 1, 1)
         grid.attach(self.entryPrimoLavoro, 1, 1, 1, 1)
 
-        
+        # GESTIONE EVENTI
         self.markNome = self.textbuffer.create_mark(
             "markNome", self.iter_at(50), False)
         self.entryNome.connect("changed", self.on_nome_changed, 50)
+
+        self.entryPrimoLavoro.connect("focus-out-event",
+                                      self.on_focus_out)
 
     def create_send_bbox(self):
         self.bb = Gtk.ButtonBox()
@@ -75,6 +83,22 @@ class TextViewWindow(Gtk.Window):
         
         # scrivo il nuovo valore di Entry
         self.textbuffer.insert(self.iter_at(posizione), nome.get_text() )
+
+    def on_focus_out(self, entry, data):
+        ctx = entry.get_style_context()
+        valida, testo = dateValidator.data_valida( entry.get_text() )
+        if valida:
+            # la data è valida
+            entry.set_text(testo)
+            entry.set_icon_from_icon_name(
+                Gtk.EntryIconPosition.SECONDARY, None)
+            ctx.remove_class('invalid')
+        else:
+            entry.set_icon_from_icon_name(
+                Gtk.EntryIconPosition.SECONDARY, 'dialog-warning')
+            entry.set_icon_tooltip_text(
+                Gtk.EntryIconPosition.SECONDARY, testo)
+            ctx.add_class('invalid')
 
     def iter_at(self, offset):
         # ritorna il textIter corrispondete all'offset

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 #TODO:  - gestione validazione email da perfezionare
 
 from gi.repository import Gtk, Gdk
