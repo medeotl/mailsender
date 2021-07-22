@@ -42,6 +42,6 @@ def data_valida(data):
 #~ print( data_valida('11/07/1975') )
 #~ print( data_valida('nico') )
 #~ print( data_valida('12345678as') )
-#~ print( data_v	alida('32132000') )
+#~ print( data_valida('32132000') )
 
 	
