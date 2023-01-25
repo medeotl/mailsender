@@ -3,6 +3,8 @@
 # Espressione regolare per validare date inserite
 # ^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$
 
+import gi
+gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, Pango
 import TOOLS.dateValidator as dateValidator
 
@@ -21,7 +23,6 @@ class TextViewWindow(Gtk.Window):
         self.create_send_bbox()
         self.create_textview()
         self.create_entry()
-        
 
     def create_textview(self):
         scrolledwindow = Gtk.ScrolledWindow()
@@ -35,23 +36,23 @@ class TextViewWindow(Gtk.Window):
         self.textbuffer.set_text("In allegato alla presente domanda di "
             + "Mini ASpI di  . "
             + "Si prega cortesemente di inviarla subito")
-        
+
         scrolledwindow.add(self.textview)
 
     def create_entry(self):
-        
+
         grid = Gtk.Grid(column_spacing=12)
         self.box.pack_start(grid, False, False, 0)
-        
-        self.lblNome = Gtk.Label("Assistito", xalign=1)
+
+        self.lblNome = Gtk.Label(label="Assistito", xalign=1)
         self.entryNome = Gtk.Entry()
         self.entryNome.set_placeholder_text("Assistito")
         self.entryNome.set_hexpand(True)
-        
-        self.lblPrimoLavoro = Gtk.Label("Primo rapporto di lavoro",
+
+        self.lblPrimoLavoro = Gtk.Label(label="Primo rapporto di lavoro",
                                         xalign=1)
         self.entryPrimoLavoro = Gtk.Entry()
-        
+
         grid.attach(self.lblNome, 0, 0, 1, 1)
         grid.attach(self.entryNome, 1, 0, 1, 1)
         grid.attach(self.lblPrimoLavoro, 0, 1, 1, 1)
@@ -67,20 +68,20 @@ class TextViewWindow(Gtk.Window):
 
     def create_send_bbox(self):
         self.bb = Gtk.ButtonBox()
-        self.bSend = Gtk.Button("Invia")
+        self.bSend = Gtk.Button(label="Invia")
         self.bb.add(self.bSend)
 
         self.box.pack_end(self.bb, False, False, 0)
 
 ######----------             GESTORI EVENTI             ----------######
-               
+
     def on_nome_changed(self, nome, posizione):
         # cancello quanto precedentemente scritto
         self.textbuffer.delete(
             self.iter_at(posizione),                        # inizio
             self.textbuffer.get_iter_at_mark(self.markNome) # fine
         )
-        
+
         # scrivo il nuovo valore di Entry
         self.textbuffer.insert(self.iter_at(posizione), nome.get_text() )
 
@@ -116,4 +117,3 @@ win = TextViewWindow()
 win.connect("delete-event", Gtk.main_quit)
 win.show_all()
 Gtk.main()
-
