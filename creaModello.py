@@ -43,6 +43,7 @@ class TextViewWindow(Gtk.Window):
 
     def create_toolbar(self):
         """ Crea la toolbar """
+        
         toolbar = Gtk.Toolbar()
         self.box.pack_end(toolbar, False, True, 0)
 
@@ -106,6 +107,7 @@ class TextViewWindow(Gtk.Window):
 
     def create_textview(self):
         """ Crea l'area di testo """
+        
         scrolledwindow = Gtk.ScrolledWindow()
         scrolledwindow.set_hexpand(True)
         scrolledwindow.set_vexpand(True)
@@ -131,6 +133,7 @@ class TextViewWindow(Gtk.Window):
 
     def on_style_button_clicked(self, button, tag):
         """ gestione dei pulsanti BOLD, ITALIC, UNDERLINE """
+        
         print (button.get_active() )
         if self.textbuffer.props.has_selection:
             # ho testo selezionato a cui applicare la formattazione
@@ -146,6 +149,7 @@ class TextViewWindow(Gtk.Window):
             self.textbuffer.apply_tag(tag, cursore, cursore)
 
     def on_button_tag_clicked(self, widget):
+            
         mark_cursore = self.textbuffer.get_insert()
         iter_cursore = self.textbuffer.get_iter_at_mark(mark_cursore)
         print(iter_cursore.get_tags() )
@@ -155,9 +159,11 @@ class TextViewWindow(Gtk.Window):
 
     def on_justify_toggled(self, widget, justification):
         """ imposta la giustificazione selezionata """
+        
         self.textview.set_justification(justification)
 
     def on_cursor_position_changed(self, buffer, data=None):
+            
         ti = self.textbuffer.get_iter_at_offset(
             self.textbuffer.props.cursor_position-1)
         self.button_bold.set_active(False)
