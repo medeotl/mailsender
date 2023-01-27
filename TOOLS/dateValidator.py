@@ -14,10 +14,10 @@ def data_valida(data):
 	print(data)
 	lunghezza = len(data)
 	if lunghezza == 10:
-		# data = gg/mm/aaaa (o errata)
-		gg = data[0:2]
-		mm = data[3:5]
-		aaaa = data[6:10]
+        # data = gg/mm/aaaa (o errata)
+        gg = data[0:2]
+        mm = data[3:5]
+        aaaa = data[6:10]
 	elif lunghezza == 8:
 	    # data = ggmmaaaa (o errata)
 	    gg = data[0:2]
