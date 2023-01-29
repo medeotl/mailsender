@@ -7,7 +7,6 @@ def data_valida(data):
     controlla che la data sia corretta
     separatori validi: / e .
     si può anche non usare separatori (es. 31121995)
-    l'anno può essere scritto abbreviato, lo si espande
     """
 
     import datetime
