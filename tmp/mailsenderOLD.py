@@ -9,7 +9,7 @@ class TextViewWindow(Gtk.Window):
         Gtk.Window.__init__(self, title="Mail Sender", border_width=12)
 
         self.set_default_size(555, 450)
-        #~ self.set_keep_above(True)
+        # ~ self.set_keep_above(True)
         self.set_position(Gtk.WindowPosition.CENTER)
 
         self.box = Gtk.Box(orientation=1, spacing=6)
@@ -17,7 +17,7 @@ class TextViewWindow(Gtk.Window):
 
         self.create_send_toolbar()
         self.create_textview()
-        #~ self.create_toolbar() # non serve (ma funziona)
+        # ~ self.create_toolbar() # non serve (ma funziona)
         self.create_entry()
         
 
@@ -103,12 +103,12 @@ class TextViewWindow(Gtk.Window):
 
         # DA USARE PER TEMPLATE CREATOR
         #
-        #~ self.tag_bold = self.textbuffer.create_tag("bold",
-            #~ weight=Pango.Weight.BOLD)
-        #~ self.tag_italic = self.textbuffer.create_tag("italic",
-            #~ style=Pango.Style.ITALIC)
-        #~ self.tag_underline = self.textbuffer.create_tag("underline",
-            #~ underline=Pango.Underline.DOUBLE)
+        # ~ self.tag_bold = self.textbuffer.create_tag("bold",
+            # ~ weight=Pango.Weight.BOLD)
+        # ~ self.tag_italic = self.textbuffer.create_tag("italic",
+            # ~ style=Pango.Style.ITALIC)
+        # ~ self.tag_underline = self.textbuffer.create_tag("underline",
+            # ~ underline=Pango.Underline.DOUBLE)
 
     def create_entry(self):
         

@@ -22,15 +22,15 @@ class Handler:
         pass
         # mostra dialogo per impostare formattazione
         # per ora non funziona
-        #~ dialog = builder.get_object("newFieldDialog")
-        #~ dialog.run()
-        #~ dialog.destroy()
-        #~ pass
-        #~ # aggiungi campo a text field
-        #~ pass
-        #~ # mostra il widget nascosto con campi oppoortunamente modficati
-        #~ fieldTemplate = builder.get_object("fieldTemplate")
-        #~ fieldTemplate.set_visible(True)
+        # ~ dialog = builder.get_object("newFieldDialog")
+        # ~ dialog.run()
+        # ~ dialog.destroy()
+        # ~ pass
+        # ~ # aggiungi campo a text field
+        # ~ pass
+        # ~ # mostra il widget nascosto con campi oppoortunamente modficati
+        # ~ fieldTemplate = builder.get_object("fieldTemplate")
+        # ~ fieldTemplate.set_visible(True)
         
 # Builder per GUI e segnali
 builder = Gtk.Builder()

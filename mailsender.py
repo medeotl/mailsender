@@ -14,7 +14,7 @@ class TextViewWindow(Gtk.Window):
         Gtk.Window.__init__(self, title="Mail Sender", border_width=12)
 
         self.set_default_size(555, 450)
-        #~ self.set_keep_above(True)
+        # ~ self.set_keep_above(True)
         self.set_position(Gtk.WindowPosition.CENTER)
 
         self.box = Gtk.Box(orientation=1, spacing=6)
@@ -103,7 +103,7 @@ class TextViewWindow(Gtk.Window):
 
     def iter_at(self, offset):
         # ritorna il textIter corrispondete all'offset
-        #~ print(offset)
+        # ~ print(offset)
         return self.textbuffer.get_iter_at_offset(offset)
 
 cssProvider = Gtk.CssProvider()
