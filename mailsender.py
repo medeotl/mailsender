@@ -52,6 +52,7 @@ class TextViewWindow(Gtk.Window):
         self.lblPrimoLavoro = Gtk.Label(label="Primo rapporto di lavoro",
                                         xalign=1)
         self.entryPrimoLavoro = Gtk.Entry()
+        self.entryPrimoLavoro.set_placeholder_text("GG/MM/AAAA o GGMMAAAA")
 
         grid.attach(self.lblNome, 0, 0, 1, 1)
         grid.attach(self.entryNome, 1, 0, 1, 1)
