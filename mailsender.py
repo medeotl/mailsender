@@ -14,6 +14,7 @@ class TextViewWindow(Gtk.Window):
         Gtk.Window.__init__(self, title="Mail Sender", border_width=12)
 
         self.set_default_size(555, 450)
+        self.set_border_width(18)
         # ~ self.set_keep_above(True)
         self.set_position(Gtk.WindowPosition.CENTER)
 
@@ -41,7 +42,7 @@ class TextViewWindow(Gtk.Window):
 
     def create_entry(self):
 
-        grid = Gtk.Grid(column_spacing=12)
+        grid = Gtk.Grid(column_spacing=12, row_spacing=6)
         self.box.pack_start(grid, False, False, 0)
 
         self.lblNome = Gtk.Label(label="Assistito", xalign=1)
