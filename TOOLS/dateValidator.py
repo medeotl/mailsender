@@ -5,25 +5,22 @@
 def data_valida(data):
     """
     controlla che la data sia corretta
-    separatori validi: / e .
-    si può anche non usare separatori (es. 31121995)
+    formati consentiti:
+      dd/mm/aaaa
+      ddmmaaaa
     """
 
     import datetime
+    data = data.replace("/", "")
+        
     print(data)
     lunghezza = len(data)
-    if lunghezza == 10:
-        # data = gg/mm/aaaa (o errata)
-        gg = data[0:2]
-        mm = data[3:5]
-        aaaa = data[6:10]
-    elif lunghezza == 8:
-        # data = ggmmaaaa (o errata)
+    if lunghezza == 8:
         gg = data[0:2]
         mm = data[2:4]
         aaaa = data[4:8]
     else:
-        return False, 'Lunghezza data errata'
+        return False, 'data errata'
 
     # verifico correttezza di gg, mm, aaaa
     try:
@@ -39,6 +36,7 @@ def data_valida(data):
 # test
 # ~ print( data_valida('11071975') )
 # ~ print( data_valida('11/07/1975') )
+# ~ print( data_valida('11/07/75') )
 # ~ print( data_valida('nico') )
 # ~ print( data_valida('12345678as') )
 # ~ print( data_valida('32132000') )
