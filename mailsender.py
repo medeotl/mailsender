@@ -85,7 +85,9 @@ class TextViewWindow(Gtk.Window):
         # scrivo il nuovo valore di Entry
         self.textbuffer.insert(self.iter_at(posizione), nome.get_text() )
 
-    def on_focus_out(self, entry, data):
+    def on_focus_out(self, entry, _):
+        if entry.get_text() == "":
+            return
         ctx = entry.get_style_context()
         valida, testo = dateValidator.data_valida( entry.get_text() )
         if valida:
