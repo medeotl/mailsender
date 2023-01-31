@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Espressione regolare per validare date inserite
-# ^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$
-
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk, Pango
+from gi.repository import Gtk, Gdk
 import TOOLS.dateValidator as dateValidator
 
 class TextViewWindow(Gtk.Window):
@@ -15,7 +12,6 @@ class TextViewWindow(Gtk.Window):
 
         self.set_default_size(555, 450)
         self.set_border_width(18)
-        # ~ self.set_keep_above(True)
         self.set_position(Gtk.WindowPosition.CENTER)
 
         self.box = Gtk.Box(orientation=1, spacing=6)
@@ -90,6 +86,7 @@ class TextViewWindow(Gtk.Window):
     def on_focus_out(self, entry, _):
         if entry.get_text() == "":
             return
+
         ctx = entry.get_style_context()
         valida, testo = dateValidator.data_valida( entry.get_text() )
         if valida:
@@ -107,7 +104,6 @@ class TextViewWindow(Gtk.Window):
 
     def iter_at(self, offset):
         # ritorna il textIter corrispondete all'offset
-        # ~ print(offset)
         return self.textbuffer.get_iter_at_offset(offset)
 
 cssProvider = Gtk.CssProvider()
