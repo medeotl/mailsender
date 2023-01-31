@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
-
 #TODO:  - gestione validazione email da perfezionare
 
+import gi
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
 import re
 
@@ -11,7 +11,9 @@ class Handler:
     def onDeleteWindow(self, *args):
         Gtk.main_quit(*args)
 
-    def onEntryChanged(self, entry):
+    def onEntryChanged(self, entry, data):
+        if entry.get_text() == "":
+            return
         ctx = entry.get_style_context()
         if not EMAIL_REGEX.match(entry.get_text() ):
             ctx.add_class('invalid')
@@ -31,7 +33,7 @@ class Handler:
         # ~ # mostra il widget nascosto con campi oppoortunamente modficati
         # ~ fieldTemplate = builder.get_object("fieldTemplate")
         # ~ fieldTemplate.set_visible(True)
-        
+
 # Builder per GUI e segnali
 builder = Gtk.Builder()
 builder.add_from_file("modelCreator.ui")
@@ -54,5 +56,3 @@ EMAIL_REGEX = re.compile(
 window = builder.get_object("mainWindow")
 window.show()
 Gtk.main()
-
-

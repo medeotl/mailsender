@@ -1,9 +1,9 @@
-GtkEntry.invalid {
+entry.invalid {
     background-color: #ffaaaa;
     background: #ffaaaa;
 }
 
-GtkButton#ok-button {
+button#ok-button {
     background-color: green;
     background: green;
 }
