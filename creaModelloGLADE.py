@@ -12,6 +12,8 @@ class Handler:
         Gtk.main_quit(*args)
 
     def onEntryChanged(self, entry, data):
+        if entry.get_text() == "":
+            return
         ctx = entry.get_style_context()
         if not EMAIL_REGEX.match(entry.get_text() ):
             ctx.add_class('invalid')
