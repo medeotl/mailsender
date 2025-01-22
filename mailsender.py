@@ -12,10 +12,9 @@ from gi.repository import Gdk, Gtk
 class TextViewWindow(Gtk.Window):
 
     def __init__(self):
-        Gtk.Window.__init__(self, title="Mail Sender", border_width=12)
+        Gtk.Window.__init__(self, title="Mail Sender", border_width=18)
 
         self.set_default_size(555, 450)
-        self.set_border_width(18)
         self.set_position(Gtk.WindowPosition.CENTER)
 
         self.box = Gtk.Box(orientation=1, spacing=6)
