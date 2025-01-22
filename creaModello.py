@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-
 # da aggiustare: funzionamento BOLD, ITALIC, UNDERLINE
 
 import gi
+
+gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, Pango
+from gi.repository import Gdk, Gtk, Pango
+
 
 class TextViewWindow(Gtk.Window):
 
@@ -23,7 +25,7 @@ class TextViewWindow(Gtk.Window):
         self.create_toolbar()
 
     def create_from(self):
-        """ Crea i campi A:, CC: e CCN: """
+        """Crea i campi A:, CC: e CCN:"""
 
         grid = Gtk.Grid(column_spacing=12, row_spacing=6)
         self.box.pack_start(grid, False, False, 0)
@@ -33,17 +35,16 @@ class TextViewWindow(Gtk.Window):
         self.entryCc = Gtk.Entry()
         self.entryCcn = Gtk.Entry()
 
-
-        grid.attach( Gtk.Label(label="A:"), 0, 0, 1, 1 )
-        grid.attach( self.entryA, 1, 0, 1, 1 )
-        grid.attach( Gtk.Label(label="Cc:"), 0, 1, 1, 1 )
-        grid.attach( self.entryCc, 1, 1, 1, 1 )
-        grid.attach( Gtk.Label(label="Ccn:"), 0, 2, 1, 1 )
-        grid.attach( self.entryCcn, 1, 2, 1, 1 )
+        grid.attach(Gtk.Label(label="A:"), 0, 0, 1, 1)
+        grid.attach(self.entryA, 1, 0, 1, 1)
+        grid.attach(Gtk.Label(label="Cc:"), 0, 1, 1, 1)
+        grid.attach(self.entryCc, 1, 1, 1, 1)
+        grid.attach(Gtk.Label(label="Ccn:"), 0, 2, 1, 1)
+        grid.attach(self.entryCcn, 1, 2, 1, 1)
 
     def create_toolbar(self):
-        """ Crea la toolbar """
-        
+        """Crea la toolbar"""
+
         toolbar = Gtk.Toolbar()
         self.box.pack_end(toolbar, False, True, 0)
 
@@ -58,17 +59,19 @@ class TextViewWindow(Gtk.Window):
         self.button_underline.set_icon_name("format-text-underline-symbolic")
         toolbar.insert(self.button_underline, 2)
 
-        self.button_bold.connect("clicked",
-            self.on_style_button_clicked, self.tag_bold)
-        self.button_italic.connect("clicked",
-            self.on_style_button_clicked, self.tag_italic)
-        self.button_underline.connect("clicked",
-            self.on_style_button_clicked, self.tag_underline)
+        self.button_bold.connect("clicked", self.on_style_button_clicked, self.tag_bold)
+        self.button_italic.connect(
+            "clicked", self.on_style_button_clicked, self.tag_italic
+        )
+        self.button_underline.connect(
+            "clicked", self.on_style_button_clicked, self.tag_underline
+        )
 
         self.style_dict = {
-            "bold":self.button_bold,
-            "italic":self.button_italic,
-            "underline":self.button_underline}
+            "bold": self.button_bold,
+            "italic": self.button_italic,
+            "underline": self.button_underline,
+        }
 
         # Get Info
         button_get_tag = Gtk.ToolButton.new(None, "TAG - Get Info")
@@ -80,61 +83,63 @@ class TextViewWindow(Gtk.Window):
         toolbar.insert(Gtk.SeparatorToolItem(), 4)
 
         # Justify LEFT, CENTER, RIGHT, FILL
-        radio_justifyleft = Gtk.RadioToolButton()
-        radio_justifyleft.set_icon_name("format-justify-left-symbolic")
-        toolbar.insert(radio_justifyleft, 5)
+        justify_left = Gtk.RadioToolButton()
+        justify_left.set_icon_name("format-justify-left-symbolic")
+        toolbar.insert(justify_left, 5)
 
-        radio_justifycenter = Gtk.RadioToolButton.new_from_widget(radio_justifyleft)
-        radio_justifycenter.set_icon_name("format-justify-center-symbolic")
-        toolbar.insert(radio_justifycenter, 6)
+        justify_center = Gtk.RadioToolButton.new_from_widget(justify_left)
+        justify_center.set_icon_name("format-justify-center-symbolic")
+        toolbar.insert(justify_center, 6)
 
-        radio_justifyright = Gtk.RadioToolButton.new_from_widget(radio_justifyleft)
-        radio_justifyright.set_icon_name("format-justify-right-symbolic")
-        toolbar.insert(radio_justifyright, 7)
+        justify_right = Gtk.RadioToolButton.new_from_widget(justify_left)
+        justify_right.set_icon_name("format-justify-right-symbolic")
+        toolbar.insert(justify_right, 7)
 
-        radio_justifyfill = Gtk.RadioToolButton.new_from_widget(radio_justifyleft)
-        radio_justifyfill.set_icon_name("format-justify-fill-symbolic")
-        toolbar.insert(radio_justifyfill, 8)
+        justify_fill = Gtk.RadioToolButton.new_from_widget(justify_left)
+        justify_fill.set_icon_name("format-justify-fill-symbolic")
+        toolbar.insert(justify_fill, 8)
 
-        radio_justifyleft.connect("toggled", self.on_justify_toggled,
-            Gtk.Justification.LEFT)
-        radio_justifycenter.connect("toggled", self.on_justify_toggled,
-            Gtk.Justification.CENTER)
-        radio_justifyright.connect("toggled", self.on_justify_toggled,
-            Gtk.Justification.RIGHT)
-        radio_justifyfill.connect("toggled", self.on_justify_toggled,
-            Gtk.Justification.FILL)
+        justify_left.connect("toggled", self.on_justify_toggled, Gtk.Justification.LEFT)
+        justify_center.connect(
+            "toggled", self.on_justify_toggled, Gtk.Justification.CENTER
+        )
+        justify_right.connect(
+            "toggled", self.on_justify_toggled, Gtk.Justification.RIGHT
+        )
+        justify_fill.connect("toggled", self.on_justify_toggled, Gtk.Justification.FILL)
 
     def create_textview(self):
-        """ Crea l'area di testo """
-        
+        """Crea l'area di testo"""
+
         scrolledwindow = Gtk.ScrolledWindow()
         scrolledwindow.set_hexpand(True)
         scrolledwindow.set_vexpand(True)
         self.box.pack_end(scrolledwindow, True, True, 0)
 
         self.textview = Gtk.TextView()
-        self.textview.set_wrap_mode(2) # 2=WORD
+        self.textview.set_wrap_mode(2)  # 2=WORD
         self.textbuffer = self.textview.get_buffer()
-        self.textbuffer.set_text("In allegato alla presente domanda di "
+        self.textbuffer.set_text(
+            "In allegato alla presente domanda di "
             + "Mini ASpI di  . "
-            + "Si prega cortesemente di inviarla subito")
-        self.textbuffer.connect("notify::cursor-position",
-            self.on_cursor_position_changed)
+            + "Si prega cortesemente di inviarla subito"
+        )
+        self.textbuffer.connect(
+            "notify::cursor-position", self.on_cursor_position_changed
+        )
 
         scrolledwindow.add(self.textview)
 
-        self.tag_bold = self.textbuffer.create_tag("bold",
-            weight=Pango.Weight.BOLD)
-        self.tag_italic = self.textbuffer.create_tag("italic",
-            style=Pango.Style.ITALIC)
-        self.tag_underline = self.textbuffer.create_tag("underline",
-            underline=Pango.Underline.SINGLE)
+        self.tag_bold = self.textbuffer.create_tag("bold", weight=Pango.Weight.BOLD)
+        self.tag_italic = self.textbuffer.create_tag("italic", style=Pango.Style.ITALIC)
+        self.tag_underline = self.textbuffer.create_tag(
+            "underline", underline=Pango.Underline.SINGLE
+        )
 
     def on_style_button_clicked(self, button, tag):
-        """ gestione dei pulsanti BOLD, ITALIC, UNDERLINE """
-        
-        print (button.get_active() )
+        """gestione dei pulsanti BOLD, ITALIC, UNDERLINE"""
+
+        print(button.get_active())
         if self.textbuffer.props.has_selection:
             # ho testo selezionato a cui applicare la formattazione
             bounds = self.textbuffer.get_selection_bounds()
@@ -145,39 +150,42 @@ class TextViewWindow(Gtk.Window):
                 self.textbuffer.remove_tag(tag, start, end)
         else:
             cursore = self.textbuffer.get_iter_at_offset(
-                self.textbuffer.props.cursor_position)
+                self.textbuffer.props.cursor_position
+            )
             self.textbuffer.apply_tag(tag, cursore, cursore)
 
     def on_button_tag_clicked(self, widget):
-            
+
         mark_cursore = self.textbuffer.get_insert()
         iter_cursore = self.textbuffer.get_iter_at_mark(mark_cursore)
-        print(iter_cursore.get_tags() )
-        print("posizione cursore: ",
-            self.textbuffer.props.cursor_position)
-        print("dimensione finestra: ",self.get_size() )
+        print(iter_cursore.get_tags())
+        print("posizione cursore: ", self.textbuffer.props.cursor_position)
+        print("dimensione finestra: ", self.get_size())
 
     def on_justify_toggled(self, widget, justification):
-        """ imposta la giustificazione selezionata """
-        
+        """imposta la giustificazione selezionata"""
+
         self.textview.set_justification(justification)
 
     def on_cursor_position_changed(self, buffer, data=None):
-            
+
         ti = self.textbuffer.get_iter_at_offset(
-            self.textbuffer.props.cursor_position-1)
+            self.textbuffer.props.cursor_position - 1
+        )
         self.button_bold.set_active(False)
         self.button_italic.set_active(False)
         self.button_underline.set_active(False)
         for tag in ti.get_tags():
             self.style_dict[tag.props.name].set_active(True)
 
+
 cssProvider = Gtk.CssProvider()
-cssProvider.load_from_path('style.css')
+cssProvider.load_from_path("style.css")
 screen = Gdk.Screen.get_default()
 styleContext = Gtk.StyleContext()
-styleContext.add_provider_for_screen(screen, cssProvider,
-                                     Gtk.STYLE_PROVIDER_PRIORITY_USER)
+styleContext.add_provider_for_screen(
+    screen, cssProvider, Gtk.STYLE_PROVIDER_PRIORITY_USER
+)
 
 win = TextViewWindow()
 win.connect("delete-event", Gtk.main_quit)

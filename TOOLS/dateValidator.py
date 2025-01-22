@@ -2,6 +2,7 @@
 
 # validatore di date
 
+
 def data_valida(data):
     """
     controlla che la data sia corretta
@@ -11,8 +12,9 @@ def data_valida(data):
     """
 
     import datetime
+
     data = data.replace("/", "")
-        
+
     print(data)
     lunghezza = len(data)
     if lunghezza == 8:
@@ -20,18 +22,19 @@ def data_valida(data):
         mm = data[2:4]
         aaaa = data[4:8]
     else:
-        return False, 'data errata'
+        return False, "data errata"
 
     # verifico correttezza di gg, mm, aaaa
     try:
         print(gg, mm, aaaa)
-        data = datetime.date(int(aaaa), int(mm), int(gg) )
+        data = datetime.date(int(aaaa), int(mm), int(gg))
     except ValueError as e:
         print(e)
         return False, "{0}".format(e)
 
     # data valida!
-    return True, gg + '/' + mm + '/' + aaaa
+    return True, gg + "/" + mm + "/" + aaaa
+
 
 # test
 # ~ print( data_valida('11071975') )
@@ -40,4 +43,3 @@ def data_valida(data):
 # ~ print( data_valida('nico') )
 # ~ print( data_valida('12345678as') )
 # ~ print( data_valida('32132000') )
-    
