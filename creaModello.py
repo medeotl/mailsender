@@ -117,7 +117,7 @@ class TextViewWindow(Gtk.Window):
         self.box.pack_end(scrolledwindow, True, True, 0)
 
         self.textview = Gtk.TextView()
-        self.textview.set_wrap_mode(2)  # 2=WORD
+        self.textview.set_wrap_mode(Gtk.WrapMode.WORD)  # 2=WORD
         self.textbuffer = self.textview.get_buffer()
         self.textbuffer.set_text(
             "In allegato alla presente domanda di "
