@@ -24,6 +24,13 @@ class TextViewWindow(Gtk.Window):
         self.create_textview()
         self.create_entry()
 
+    def create_send_bbox(self):
+        self.bb = Gtk.ButtonBox()
+        self.bSend = Gtk.Button(label="Invia")
+        self.bb.add(self.bSend)
+
+        self.box.pack_end(self.bb, False, False, 0)
+
     def create_textview(self):
         scrolledwindow = Gtk.ScrolledWindow()
         scrolledwindow.set_hexpand(True)
@@ -65,13 +72,6 @@ class TextViewWindow(Gtk.Window):
         self.entryNome.connect("changed", self.on_nome_changed, 50)
 
         self.entryPrimoLavoro.connect("focus-out-event", self.on_focus_out)
-
-    def create_send_bbox(self):
-        self.bb = Gtk.ButtonBox()
-        self.bSend = Gtk.Button(label="Invia")
-        self.bb.add(self.bSend)
-
-        self.box.pack_end(self.bb, False, False, 0)
 
     ######----------             GESTORI EVENTI             ----------######
 
