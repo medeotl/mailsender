@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# da aggiustare: funzionamento BOLD, ITALIC, UNDERLINE
 
 import gi
 
