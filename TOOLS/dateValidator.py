@@ -28,10 +28,11 @@ def data_valida(data):
         data = datetime.date(int(aaaa), int(mm), int(gg))
     except ValueError as e:
         print(e)
-        return False, "{0}".format(e)
+        return False, f"{e}"
 
     # data valida!
-    return True, gg + "/" + mm + "/" + aaaa
+    return True, f"{gg}/{mm}/{aaaa}"
+    # ~ return True, gg + "/" + mm + "/" + aaaa
 
 
 # test
