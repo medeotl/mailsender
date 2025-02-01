@@ -15,8 +15,7 @@ def data_valida(data):
 
     data = data.replace("/", "")
 
-    lunghezza = len(data)
-    if lunghezza == 8:
+    if len(data) == 8:
         gg = data[0:2]
         mm = data[2:4]
         aaaa = data[4:8]
