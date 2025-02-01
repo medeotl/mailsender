@@ -15,7 +15,6 @@ def data_valida(data):
 
     data = data.replace("/", "")
 
-    print(data)
     lunghezza = len(data)
     if lunghezza == 8:
         gg = data[0:2]
